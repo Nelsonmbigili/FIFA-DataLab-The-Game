@@ -1,4 +1,4 @@
-# 🎈 Blank app template
+# Fifa Data Lab - The Game
 
 A simple Streamlit app template for you to modify!
 
