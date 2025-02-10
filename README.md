@@ -2,7 +2,7 @@
 
 A simple Streamlit app template for you to modify!
 
-[![Check the App]((https://share.streamlit.io/user/nelsonmbigili)]
+[![Check the App](https://fifa-datalab-the-game.streamlit.app)]
 
 ### How to run it on your own machine
 
