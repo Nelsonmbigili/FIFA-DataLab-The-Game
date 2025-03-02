@@ -1,38 +1,37 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-import seaborn as sns
 from PIL import Image
-import codecs
-import streamlit.components.v1 as components
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn import metrics
-import matplotlib.pyplot as plt
 
+
+# Loading Animation
 with st.spinner('Loading page...'):
-    st.title("Fifa Data Lab: The Game")
-    st.subheader(":violet[Predicting Football Player's Value and Salary: Data Driven Approach]")
-    image_path = Image.open("./Assets/fifa_logo.png") 
+    # Page Title and Subtitle
+    st.title("⚽ Fifa Data Lab: The Game")
+    st.subheader(":violet[Predicting Football Players' Salaries]")
+    st.subheader(":violet[A Data-Driven Approach]")
+    
+    # Display Image
+    image_path = Image.open("./Assets/france.png") 
     st.image(image_path)
 
+    # Objective Section
+    st.write("### Objective")
+    st.write("This application is designed to explore player attributes from EA Sports' FIFA datasets across 6 years (2017-2022). Users can interactively analyze the data, visualize trends, and use a simple Linear Regression model to predict player salaries and market values. Whether you are a football fan, a data enthusiast, or just curious about player statistics, this app provides an engaging way to understand and explore FIFA data.")
 
+    # Inspiration Section
+    st.write("### Inspiration")
+    st.write("We are passionate football fans who love and enjoy the game. FIFA has been a major part of our lives, bringing football closer to millions worldwide. With this project, we aim to merge our love for football with data analysis, helping users gain insights into how player attributes influence salaries and market values.")
 
+    # Our Dataset Section
+    st.write("### Our Dataset")
+    st.write("The dataset consists of six FIFA editions, from FIFA 2017 to FIFA 2022. Each dataset contains detailed player attributes, including skills, physical attributes, potential ratings, wages, and market values. This structured data allows us to explore trends over time and predict players' financial worth based on their performance.")
 
-    st.markdown("<h3 style='text-align: center; font-weight: bold;'>Objective</h3>", unsafe_allow_html=True)
-    st.write("""
-Understanding the evolution of player performance in FIFA is crucial for scouts, gamers, and analysts. 
-By analyzing historical FIFA data from 2017 to 2023, we aim to uncover key trends and predict crucial 
-player attributes using linear regression.
+    # Our Goal Section
+    st.write("### Our Goal")
+    st.write("Our main goal is to create an interactive and user-friendly application that provides valuable insights into FIFA player data. The app will allow users to:")
+    st.write("- Preview raw data and explore different player attributes.")
+    st.write("- Visualize player statistics and trends using interactive charts.")
+    st.write("- Use a machine learning model to predict player salaries and market values.")
+    st.write("By integrating data analytics and machine learning, we aim to make FIFA player analysis accessible to everyone, from casual gamers to data science enthusiasts.")
 
-Our model will help in:
-- Identifying undervalued players based on predicted ratings.
-- Analyzing trends in player development over time.
-- Supporting team-building decisions in FIFA career mode.
-""")
-
-    st.markdown("<h3 style='text-align: center; font-weight: bold;'>Inspiration</h3>", unsafe_allow_html=True)
-
-    st.markdown("<h3 style='text-align: center; font-weight: bold;'>Our Dataset</h3>", unsafe_allow_html=True)
-
-    st.markdown("<h3 style='text-align: center; font-weight: bold;'>Our Goal</h3>", unsafe_allow_html=True)
+    # Final Message
+    st.success("Let's dive into the world of FIFA data and uncover hidden insights together! ⚽")

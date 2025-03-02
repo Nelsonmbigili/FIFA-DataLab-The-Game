@@ -9,8 +9,7 @@ from PIL import Image
 import codecs
 import streamlit.components.v1 as components
 from streamlit_option_menu import option_menu  # pip install streamlit-menu
-
-st.title("FIFA Data Lab - The Game")
+st.title("⚽ FIFA Data Lab: The Game")
 
 # Datasets dictionary
 datasets = {

@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("FIFA Data Lab: The Game")
+st.title("⚽ FIFA Data Lab: The Game")
 
 st.markdown("Predicting Football Player's Value and Salary: Data Driven Approach")
 
