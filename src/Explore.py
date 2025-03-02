@@ -19,7 +19,6 @@ datasets = {
     "FIFA20": "Datasets/FIFA20_official_data.csv",
     "FIFA21": "Datasets/FIFA21_official_data.csv",
     "FIFA22": "Datasets/FIFA22_official_data.csv",
-    "FIFA23": "Datasets/FIFA23_official_data.csv",
 }
 
 st.title("Explore")
