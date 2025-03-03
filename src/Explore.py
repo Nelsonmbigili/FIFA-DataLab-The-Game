@@ -29,10 +29,39 @@ if selected == "01: Data":
     st.markdown("## :blue[Select a dataset]")
     dataset_option = st.selectbox("FIFA Version: ",list(datasets.keys()));
     df = pd.read_csv(datasets[dataset_option])
-    st.title("Data Preview:")
+    st.markdown("### :violet[Data Sumary]")
     st.dataframe(df.describe())
-    st.write("View Top 10 Players Various Categories ")
-    category=st.selectbox("Top Ten in :", ["Age", "Overall", "Potential", "Special"])
+
+    st.markdown("### :violet[Data Prevew Top 10 rows]")
+    st.dataframe(df.head(10))
+    # Select category to sort players
+    st.markdown("### :violet[ View Top 10 Players Various Categories]")
+    categories = [
+        "Age", "Overall", "Potential", "Value(€M)", "Wage(€K)",  
+        "Acceleration", "SprintSpeed", "Agility", "Balance", "Strength", "Stamina", "Jumping",  
+        "Crossing", "Finishing", "Dribbling", "FKAccuracy", "LongPassing", "BallControl", "Positioning", "Vision", "Composure",  
+        "StandingTackle", "SlidingTackle", "Interceptions", "Aggression", 
+        "GKDiving", "GKHandling", "GKKicking", "GKPositioning", "GKReflexes"  
+    ]
+    category = st.selectbox("Top Ten in:", categories)
+## To be Modified
+    if category in df.columns:
+    # Base columns to display
+        base_columns = ["Name","Nationality","Club", "Age", "Overall", "Value(€M)", "Wage(€K)"]
+    
+    # Add the selected category only if it's not already in base_columns
+        columns_to_display = base_columns if category in base_columns else base_columns + [category]
+    
+    # Get top 10 players sorted by the selected category
+        top_10_players = df.sort_values(by=category, ascending=False).head(10)
+    
+    # Display selected columns
+        st.dataframe(top_10_players[columns_to_display])
+    else:
+        st.write("⚠️ Selected category not found in the dataset.")
+
+
+
         
 elif selected == "02: Viz":
     st.markdown("### :violet[Data Visualization]")
