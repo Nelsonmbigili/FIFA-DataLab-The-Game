@@ -1,7 +1,7 @@
 # Fifa Data Lab - The Game
 
 
-[![Check the App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://fifa-datalab-the-game.streamlit.app)
+[![Check the App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://the-fifa-data-lab.streamlit.app/)
 ### How to run it on your own machine
 
 1. Install the requirements
