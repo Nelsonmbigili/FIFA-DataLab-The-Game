@@ -38,48 +38,97 @@ elif selected == "02: Viz":
     st.markdown("### :violet[Data Visualization]")
     st.markdown("## :blue[Select a dataset]")
     dataset_option = st.selectbox("FIFA Version: ",list(datasets.keys()));
-    df = datasets[dataset_option]
+    df = pd.read_csv(datasets[dataset_option])
 
-    st.subheader("Distribution of Player Ratings")
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.histplot(df["Overall"], bins=20, kde=True, color="purple", ax=ax)
-    ax.set_xlabel("Overall Rating")
-    ax.set_ylabel("Count")
+
+    # Select only numeric columns
+    Numeric_df = df.select_dtypes(include=['number'])
+
+    # Define the expected columns
+    expected_columns = ["Age", "Wage(€K)", "Crossing", "Finishing", "Dribbling", 
+                        "Acceleration", "Agility", "Strength", "Penalties", "Best Overall Rating"]
+    
+    Numeric_df.columns = Numeric_df.columns.str.strip()
+
+    # Check for missing columns
+    missing_columns = [col for col in expected_columns if col not in Numeric_df.columns]
+    if missing_columns:
+        st.warning(f"Missing columns: {missing_columns}")
+    else:
+        # Select only the required columns
+        Filtered_Numeric_df = Numeric_df[expected_columns]
+
+        # Compute correlation matrix
+        correlation_matrix = Filtered_Numeric_df.corr()
+
+        # Display heatmap
+        st.markdown("## 🔥 Heatmap of Feature Correlations")
+        fig, ax = plt.subplots(figsize=(10, 6))
+        sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap="coolwarm", ax=ax)
+        st.pyplot(fig)
+
+        st.markdown("## 🔥 Distributions of Football Playes")
+        st.write("select a category to view Football Players Distibution")
+
+        categories = {
+            "Age": "Age",
+            "Wage (€K)": "Wage(€K)",
+            "Weight (lbs)": "Weight(lbs)",
+            "Preferred Foot": "Preferred Foot",
+            "Best Overall Rating": "Best Overall Rating"
+        }
+
+        bins = {
+            "Age": [15, 20, 25, 30, 35, 40, 45],
+            "Wage (€K)": [0, 50, 100, 200, 500, 1000, 5000],
+            "Weight (lbs)": [120, 140, 160, 180, 200, 220, 250],
+            "Best Overall Rating": [40, 50, 60, 70, 80, 90, 100]
+        }
+        # Allow user to select a category
+        selected_category = st.selectbox("Choose a category:", list(categories.keys()))
+
+        # Allow user to choose Pie or Bar Chart
+        chart_type = st.radio("Select Chart Type:", ["Pie Chart", "Bar Chart"])
+
+        # Convert numeric values into bins if necessary
+        if selected_category in bins:
+            df[categories[selected_category]].fillna(df[categories[selected_category]].median(), inplace=True)
+            df[selected_category] = pd.cut(df[categories[selected_category]], bins=bins[selected_category])
+
+        # Plotting the distribution
+        fig, ax = plt.subplots(figsize=(8, 6))
+    sizes = df[selected_category].value_counts()
+    if chart_type == "Pie Chart":
+        # Pie Chart
+        labels = sizes.index.astype(str)
+
+        wedges, texts, autotexts = ax.pie(
+            sizes,
+            startangle=90,
+            colors=sns.color_palette("Set2"),
+            wedgeprops={'edgecolor': 'black'},
+            labels=None, 
+            autopct=lambda p: f'{p:.2f}%' if p > 3 else "",  # Hide very small values
+            pctdistance=0.6
+        )
+
+        ax.legend(wedges, labels, title=selected_category, loc="center left", bbox_to_anchor=(1, 0.5))
+        ax.set_ylabel("")
+        ax.set_title(f"Distribution of {selected_category}")
+    else:
+        # Bar Chart
+        sns.barplot(x=sizes.index.astype(str), y=sizes.values, ax=ax, palette="Set2", edgecolor="black")
+        ax.set_ylabel("")
+        ax.set_title(f"Distribution of {selected_category}")
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
+
+    # Show Chart
     st.pyplot(fig)
 
-    #2. Age vs. Overall Rating
-    st.subheader("Age vs. Overall Rating")
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.scatterplot(x=df["Age"], y=df["Overall"], alpha=0.5, color="blue", ax=ax)
-    ax.set_xlabel("Age")
-    ax.set_ylabel("Overall Rating")
-    st.pyplot(fig)
+    st.markdown("## 🔥 Distributions of Football Playes")
+    
 
-    # 3. Club-wise Average Player Rating
-    st.subheader("Top 10 Clubs by Average Player Rating")
-    top_clubs = df.groupby("Club")["Overall"].mean().nlargest(10)
-    fig, ax = plt.subplots(figsize=(8, 5))
-    top_clubs.sort_values().plot(kind="barh", color="green", ax=ax)
-    ax.set_xlabel("Average Rating")
-    ax.set_ylabel("Club")
-    st.pyplot(fig)
-
-    # 4. Preferred Foot Distribution
-    st.subheader("Preferred Foot Distribution")
-    fig, ax = plt.subplots(figsize=(6, 4))
-    df["Preferred Foot"].value_counts().plot(kind="pie", autopct="%1.1f%%", colors=["gold", "cyan"], ax=ax)
-    ax.set_ylabel("")  
-    st.pyplot(fig)
-
-    # 5. Value vs. Wage
-    st.subheader("Player Value vs. Wage")
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.scatterplot(x=df["Value"].str.replace("€", "").str.replace("M", "").astype(float), 
-                    y=df["Wage"].str.replace("€", "").str.replace("K", "").astype(float), 
-                    alpha=0.5, color="red", ax=ax)
-    ax.set_xlabel("Value (Millions €)")
-    ax.set_ylabel("Wage (Thousands €)")
-    st.pyplot(fig)
+   
 elif selected == "03: Pred":
     st.markdown("### :violet[Data Prediction]")
     st.markdown("<p style='font-size:20px; color:white;'>Select a dataset</p>", unsafe_allow_html=True)
