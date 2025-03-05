@@ -28,7 +28,8 @@ with st.spinner('Loading page...'):
         "Ryan Opande": "rjo9414@nyu.edu",
         "Uditi Sharma": "us2133@nyu.edu",
         "Nelson Mbigili": "nfm8340@nyu.edu",
-        "Dhruv Gopan": "dag10005@nyu.edu"
+        "Dhruv Gopan": "dag10005@nyu.edu",
+        "Sean Shapiro": "sms10116@nyu.edu"
     }
     for name, email in team_members.items():
         st.write(f"- **{name}** ({email})")

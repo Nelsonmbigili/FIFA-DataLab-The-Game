@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
 import numpy as np
 import sklearn  # pip install scikit-learn 
 
@@ -91,12 +94,12 @@ elif selected == "02: Viz":
         correlation_matrix = Filtered_Numeric_df.corr()
 
         # Display heatmap
-        st.markdown("## 🔥 Heatmap of Feature Correlations")
+        st.markdown("## Heatmap of Feature Correlations 📊")
         fig, ax = plt.subplots(figsize=(10, 6))
         sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap="coolwarm", ax=ax)
         st.pyplot(fig)
 
-        st.markdown("## 🔥 Distributions of Football Playes")
+        st.markdown("##  Distributions of Football Playes 📊")
         st.write("select a category to view Football Players Distibution")
 
         categories = {
@@ -154,12 +157,67 @@ elif selected == "02: Viz":
     # Show Chart
     st.pyplot(fig)
 
-    st.markdown("## 🔥 Distributions of Football Playes")
+    st.markdown("##  Distributions of Football Playes 📊")
     
 
    
 elif selected == "03: Pred":
     st.markdown("### :violet[Data Prediction]")
-    st.markdown("<p style='font-size:20px; color:white;'>Select a dataset</p>", unsafe_allow_html=True)
+    st.markdown("## :blue[Select a dataset]")
     dataset_option = st.selectbox("FIFA Version: ",list(datasets.keys()));
+    df = pd.read_csv(datasets[dataset_option])
+
+    st.markdown("##  Predict Football Player's Wages 💶 ")
+    features = st.multiselect(
+        "Choose Features to use for Wages Prediction", 
+        ["Age", "Overall", "Potential", "Acceleration", "SprintSpeed", 
+         "Strength", "Stamina", "Finishing", "Dribbling", "BallControl", "Best Overall Rating"]
+    )
+    if st.button("Predict Wages") and features:
+        X = df[features]
+        y = df['Wage(€K)']
+
+        # Split data
+    
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+        
+        # Train model
+        model = LinearRegression()
+        model.fit(X_train, y_train)
+
+        # Predict and evaluate
+        y_pred = model.predict(X_test)
+
+        # col1, col2, col3 = st.columns(3)
+        
+        # with col1:
+        #     st.metric("Mean Absolute Error", 
+        #               f"€{metrics.mean_absolute_error(y_test, y_pred):.2f}K")
+        
+        # with col2:
+        #     st.metric("Mean Squared Error", 
+        #               f"€{metrics.mean_squared_error(y_test, y_pred):.2f}K")
+        
+        # with col3:
+        #     st.metric("R² Score", 
+        #               f"{metrics.r2_score(y_test, y_pred):.2f}")
+
+        # # Feature importance
+        # importance = pd.DataFrame({
+        #     'feature': features,
+        #     'importance': np.abs(model.coef_)
+        # }).sort_values('importance', ascending=False)
+
+        # st.markdown("### :violet[Feature Importance]")
+        # st.dataframe(importance)
+
+        # Visualization: Actual vs Predicted Wages
+        sns.scatterplot(x=y_test, y=y_pred, alpha=0.5)
+        plt.xlabel("Actual Player Salary")
+        plt.ylabel("Predicted Player Salary")
+        plt.title("Actual vs Predicted Player Salary")
+        st.pyplot(plt)
+
+    st.markdown("## Predict Football Player's Value 💰 ")
+
         
