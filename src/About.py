@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+import pandas as pd
 
 
 # Loading Animation
@@ -14,19 +15,35 @@ with st.spinner('Loading page...'):
     st.image(image_path)
 
     # Objective Section
-    st.write("### Objective")
-    st.write("This application is designed to explore player attributes from EA Sports' FIFA datasets across 6 years (2017-2022). Users can interactively analyze the data, visualize trends, and use a simple Linear Regression model to predict player salaries and market values. Whether you are a football fan, a data enthusiast, or just curious about player statistics, this app provides an engaging way to understand and explore FIFA data.")
+    st.markdown("### :violet[Objective]")
+    st.write("Users can use this app to examine datasets from FIFA 17 to FIFA 22, spanning the years between 2017 and 2022. Using a linear regression model users can predict the salaries and market values of certain players using attributes such as their ratings on the game. The app allows fans of the game of football to make interesting observations about their favorite players using accurate data.")
 
     # Inspiration Section
-    st.write("### Inspiration")
-    st.write("We are passionate football fans who love and enjoy the game. FIFA has been a major part of our lives, bringing football closer to millions worldwide. With this project, we aim to merge our love for football with data analysis, helping users gain insights into how player attributes influence salaries and market values.")
+    st.markdown("### :violet[Inspiration]")
+    st.write("The FIFA games have been a crucial part of many of our lives and even some of the players actively keep up with how their performance on the pitch impacts their FIFA rating. This app was made to merge our collective love for football with data analysis to make some fun predictions about our favorite players.")
+
 
     # Our Dataset Section
-    st.write("### Our Dataset")
-    st.write("The dataset consists of six FIFA editions, from FIFA 2017 to FIFA 2022. Each dataset contains detailed player attributes, including skills, physical attributes, potential ratings, wages, and market values. This structured data allows us to explore trends over time and predict players' financial worth based on their performance.")
+    st.markdown("### :violet[Our Dataset]")
+    st.write("The dataset we have selected includes data from six different versions of the game released between the years 2017 and 2022. The dataset is quite extensive and includes various attributes about the players including skills, physical attributes, potential ratings, wages, and market values. As a result this dataset will help us make accurate predictions about all the players.") 
+    st.markdown("##### :red[Dataset Columns:]")
+    df = pd.read_csv("Datasets/FIFA22_official_data.csv")
+    st.code(
+    '''
+    ID, Name, Age, Nationality, Overall, Potential, Club, Value(€M), Wage(€K), 
+    Preferred Foot, International Reputation, Weak Foot, Skill Moves, Jersey Number, 
+    Joined(yr), Contract Valid Until, Height(cm), Weight(kg), Crossing, Finishing, 
+    HeadingAccuracy, ShortPassing, Volleys, Dribbling, Curve, FKAccuracy, LongPassing, 
+    BallControl, Acceleration, SprintSpeed, Agility, Reactions, Balance, ShotPower, 
+    Jumping, Stamina, Strength, LongShots, Aggression, Interceptions, Positioning, 
+    Vision, Penalties, Composure, StandingTackle, SlidingTackle, GKDiving, GKHandling, 
+    GKKicking, GKPositioning, GKReflexes, Best Overall Rating''', 
+    language='python'
+)
+
 
     # Our Goal Section
-    st.write("### Our Goal")
+    st.markdown("### :violet[Our Goal]")
     st.write("Our main goal is to create an interactive and user-friendly application that provides valuable insights into FIFA player data. The app will allow users to:")
     st.write("- Preview raw data and explore different player attributes.")
     st.write("- Visualize player statistics and trends using interactive charts.")
