@@ -18,7 +18,7 @@ with st.spinner('Loading page...'):
     st.write(
         "- **Welcome Page:** Navigating the App & Meet the Team.\n"
         "- **About Page:** Motivation and Objectives.\n"
-        "- **Explore Page:** Preview and Visualize Data & Linear Regression on Salaries of Football Players\n"
+        "- **Explore Page:** Preview, Visualize Data & Linear Regression on Salaries and Values of Football Players\n"
         "- **Remarks:** Conlusion and Insights from the Team.\n"
     )
 
