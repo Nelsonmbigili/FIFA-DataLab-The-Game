@@ -132,8 +132,8 @@ elif selected == "02: Viz":
             "Height(Feet)": "Height(Feet)",
             "Preferred Foot": "Preferred Foot",
             "Best Overall Rating": "Best Overall Rating"
-        }
-
+        } 
+        
         bins = {
             "Age": [15, 20, 25, 30, 35, 40, 45],
             "Wage (€K)": [0, 50, 100, 200, 500, 1000, 5000],
@@ -152,49 +152,62 @@ elif selected == "02: Viz":
         if selected_category in bins:
             df[categories[selected_category]].fillna(df[categories[selected_category]].median(), inplace=True)
             df[selected_category] = pd.cut(df[categories[selected_category]], bins=bins[selected_category])
-
         # Plotting the distribution
         fig, ax = plt.subplots(figsize=(8, 6))
     sizes = df[selected_category].value_counts()
     if chart_type == "Pie Chart":
         # Sort sizes and labels by interval (left bound) for consistent ordering
-        sorted_intervals = sorted(sizes.index, key=lambda x: x.left)
-        sorted_sizes = sizes.loc[sorted_intervals]
+        ## Because Prefered Foot is a categorical variable, adding this so it is well displayed
+        if(selected_category=="Preferred Foot"):
+            sorted_sizes = sizes.sort_values()
+            sorted_labels = sorted_sizes.index.astype(str)
+            wedges, texts, autotexts = ax.pie(
+                sorted_sizes,
+                startangle=90,
+                colors=sns.color_palette("Set2"),
+                wedgeprops={'edgecolor': 'black'},
+                labels=None,
+                autopct=lambda p: f'{p:.2f}%' if p > 3 else "",  # Hide very small values
+                pctdistance=0.6
+            )
+            # Create the legend in the same order as the pie chart
+            ax.legend(wedges, sorted_labels, title=selected_category, loc="center left", bbox_to_anchor=(1, 0.5))
 
-        # Calculate percentages based on sorted sizes
-        total = sorted_sizes.sum()
-        percentages = (sorted_sizes / total) * 100
+        else:
+            sorted_intervals = sorted(sizes.index, key=lambda x: x.left)
+            sorted_sizes = sizes.loc[sorted_intervals]
+        
+            # Calculate percentages based on sorted sizes
+            total = sorted_sizes.sum()
+            percentages = (sorted_sizes / total) * 100
 
-        # Plot pie chart (wedges in correct order)
-        wedges, texts, autotexts = ax.pie(
-            sorted_sizes,
-            startangle=90,
-            colors=sns.color_palette("Set2", n_colors=len(sorted_sizes)),  # Ensure color count matches
-            wedgeprops={'edgecolor': 'black'},
-            labels=None,
-            autopct=lambda p: f'{p:.2f}%' if p > 3 else "",  # Hide very small values
-            pctdistance=0.6
-        )
+            # Plot pie chart (wedges in correct order)
+            wedges, texts, autotexts = ax.pie(
+                sorted_sizes,
+                startangle=90,
+                colors=sns.color_palette("Set2", n_colors=len(sorted_sizes)),  # Ensure color count matches
+                wedgeprops={'edgecolor': 'black'},
+                labels=None,
+                autopct=lambda p: f'{p:.2f}%' if p > 3 else "",  # Hide very small values
+                pctdistance=0.6
+            )
 
-        # Prepare formatted legend labels
-        legend_labels = [f"{str(interval)} ({percentages[interval]:.2f}%)" for interval in sorted_intervals]
-
-        # Create legend linked directly to wedges (color matches)
-        ax.legend(
-            wedges,  # Correct color order
-            legend_labels,
-            title=selected_category,
-            loc="center left",
-            bbox_to_anchor=(1, 0.5)
-        )
-
+            # Prepare formatted legend labels
+            legend_labels = [f"{str(interval)} ({percentages[interval]:.2f}%)" for interval in sorted_intervals]
+            # Create legend linked directly to wedges (color matches)
+            ax.legend(
+                wedges,  # Correct color order
+                legend_labels,
+                title=selected_category,
+                loc="center left",
+                bbox_to_anchor=(1, 0.5)
+            )
+        
         # Set title and label
         ax.set_ylabel("")
         ax.set_title(f"Distribution of {selected_category}")
-
         # Show plot
         st.pyplot(fig)
-
     else:
         # Bar Chart
         sns.barplot(x=sizes.index.astype(str), y=sizes.values, ax=ax, palette="Set2", edgecolor="black", order=sizes.index.sort_values()); ax.set_ylabel(""); ax.set_title(f"Distribution of {selected_category}"); ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right'); ax.yaxis.grid(True); ax.set_axisbelow(True)
