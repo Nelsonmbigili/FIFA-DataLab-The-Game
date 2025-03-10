@@ -2,19 +2,25 @@ import streamlit as st
 
 st.title("⚽ FIFA Data Lab: The Game")
 
-st.markdown("Predicting Football Player's Value and Salary: Data Driven Approach")
 
-st.header("Objective")
-st.markdown("Understanding the evolution of player performance in FIFA is crucial for scouts, gamers, and analysts. By analyzing historical FIFA data from 2017 to 2023, we aim to uncover key trends and predict crucial player attributes using linear regression.")
+st.markdown(r"""
+### Key Insights and Findings
+The **FIFA Datalab** app offers a comprehensive look at player statistics across multiple FIFA versions. By leveraging data from FIFA 17 to FIFA 22, we were able to observe trends in player values, wages, and performance over the years. Using a simple linear Regression model, we successfully predict player salaries and market values with high accuracy, providing fans and data enthusiasts with unique insights into the game. Some key findings include:
 
-st.header("Our Dataset")
-st.markdown("Historical FIFA player data from 2017 to 2023.")
+- **Rising Star Players**: Younger players with high potential tend to have a lower wage but a significantly higher market value.
+- **Impact of Nationality and Club**: Players from top-tier clubs or nations generally have higher wages and market values.
+- **Prediction Accuracy**: Our linear regression model provided solid predictions, offering a realistic view of player salaries based on their in-game attributes.
 
-st.header("Our Goal")
-st.markdown("Identifying undervalued players and analyzing trends in player development.")
+### Reflections and Works for Future
+Although the app provides accurate predictions, there’s always room for improvement and expansion. Future updates could include:
+- **Incorporating more features**: Additional attributes like player injuries, playing styles, or historical performance could improve model accuracy.
+- **Expanding datasets**: Including more recent versions of FIFA or adding external data sources like player transfers could further enhance the model's predictions.
+- **Advanced Models**: Transitioning from linear regression to more complex models such as Random Forest or XGBoost could refine the accuracy of the predictions.
 
-st.header("WHY THIS TOPIC? 🔍")
-st.markdown("Understanding the factors contributing to player performance is essential for scouting, gaming strategies, and career mode decisions.")
+### Special Thanks
+A big thank you to all the creators of FIFA for providing such detailed datasets and for inspiring millions worldwide. Additionally, thanks to the open-source community for the tools and libraries (like Pandas, Scikit-learn, Seaborn, and Streamlit) that made this app possible. Finally, we appreciate the FIFA fans and data enthusiasts who contributed valuable feedback.
 
-st.header("OUR GOAL 🎯")
-st.markdown("Use data analysis and machine learning to predict player ratings, values, and salaries for better decision-making.")
+""")
+
+st.success("Hope you enjoyed using the App, Consider sharing it with Friends! ⚽")
+
