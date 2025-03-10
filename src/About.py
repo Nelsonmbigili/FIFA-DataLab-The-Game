@@ -28,20 +28,16 @@ with st.spinner('Loading page...'):
     st.write("The dataset we have selected includes data from six different versions of the game released between the years 2017 and 2022. The dataset is quite extensive and includes various attributes about the players including skills, physical attributes, potential ratings, wages, and market values. As a result this dataset will help us make accurate predictions about all the players.") 
     st.markdown("##### :red[Dataset Columns:]")
     df = pd.read_csv("Datasets/FIFA22_official_data.csv")
-    st.code(
-    '''
-    ID, Name, Age, Nationality, Overall, Potential, Club, Value(€M), Wage(€K), 
-    Preferred Foot, International Reputation, Weak Foot, Skill Moves, Jersey Number, 
-    Joined(yr), Contract Valid Until, Height(cm), Weight(kg), Crossing, Finishing, 
-    HeadingAccuracy, ShortPassing, Volleys, Dribbling, Curve, FKAccuracy, LongPassing, 
-    BallControl, Acceleration, SprintSpeed, Agility, Reactions, Balance, ShotPower, 
-    Jumping, Stamina, Strength, LongShots, Aggression, Interceptions, Positioning, 
-    Vision, Penalties, Composure, StandingTackle, SlidingTackle, GKDiving, GKHandling, 
-    GKKicking, GKPositioning, GKReflexes, Best Overall Rating''', 
-    language='python'
-)
-
-
+    st.code('''
+        "ID", "Name", "Age", "Nationality", "Overall", "Potential", "Club", "Value(€M)", "Wage(€K)", 
+        "Preferred Foot", "International Reputation", "Weak Foot", "Skill Moves", "Jersey Number", 
+        "Joined(yr)", "Contract Valid Until", "Height(cm)", "Weight(kg)", "Crossing", "Finishing", 
+        "HeadingAccuracy", "ShortPassing", "Volleys", "Dribbling", "Curve", "FKAccuracy", "LongPassing", 
+        "BallControl", "Acceleration", "SprintSpeed", "Agility", "Reactions", "Balance", "ShotPower", 
+        "Jumping", "Stamina", "Strength", "LongShots", "Aggression", "Interceptions", "Positioning", 
+        "Vision", "Penalties", "Composure", "StandingTackle", "SlidingTackle", "GKDiving", "GKHandling", 
+        "GKKicking", "GKPositioning", "GKReflexes", "Best Overall Rating" 
+        ''')
     # Our Goal Section
     st.markdown("### :violet[Our Goal]")
     st.write("Our main goal is to create an interactive and user-friendly application that provides valuable insights into FIFA player data. The app will allow users to:")
